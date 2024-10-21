@@ -7,12 +7,11 @@ import Rank from './components/Rank/Rank'
 import 'tachyons';
 import './App.css';
 import ParticlesBg from 'particles-bg';
-import Clarifai from 'clarifai'
 
 const PAT = 'ea705a754d4146989e8d8053c8d8e7c7';
-const USER_ID = 'clarifai';
+const USER_ID = 'fabilier228';
 const APP_ID = 'test';
-const MODEL_ID = 'general-image-recognition';
+const MODEL_ID = 'face-detection';
 
 const clarifaiRequestOption = (imageUrl) => {
   const IMAGE_URL = imageUrl;
@@ -63,25 +62,16 @@ class App extends React.Component {
     this.setState({imageUrl: this.state.input})
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
-    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/outputs", clarifaiRequestOption(this.state.input))
+    fetch("v2/models/" + MODEL_ID + "/outputs", clarifaiRequestOption(this.state.input))
     .then(response => {
-      console.log("hi", response)
-      if (response) {
-        fetch('http://localhost:3000/image', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            id: this.state.user.id
-          })
-        })
-          .then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user, { entries: count}))
-          })
-      }
-      this.displayFaceBox(this.calculateFaceLocation(response))
+      
+      response.json().then((res) => {
+        console.log(res.outputs[0].data.regions[0].region_info.bounding_box);
+        
+      });
+
     })
-    .catch(err => console.log("Bad response"));
+    .catch(err => console.log("Bad response", err));
 
   }
 
