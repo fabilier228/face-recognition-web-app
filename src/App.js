@@ -10,10 +10,12 @@ import 'tachyons';
 import './App.css';
 import ParticlesBg from 'particles-bg';
 
-const PAT = 'ea705a754d4146989e8d8053c8d8e7c7';
-const USER_ID = 'fabilier228';
-const APP_ID = 'test';
-const MODEL_ID = 'face-detection';
+
+// Enter you own information based on what you declared on clarifai.api
+const PAT = ''; // your token
+const USER_ID = ''; // your name on the platform
+const APP_ID = ''; // name for the app you created on the platform
+const MODEL_ID = 'face-detection'; // you can enter here any model you need for this app 
 
 const clarifaiRequestOption = (imageUrl) => {
   const IMAGE_URL = imageUrl;
